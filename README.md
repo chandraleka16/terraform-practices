@@ -1,1 +1,1 @@
-# Hacktoberfest 2021
+# Terraform Practices
