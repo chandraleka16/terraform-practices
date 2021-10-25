@@ -1,5 +1,4 @@
-# PROVIDE AWS
-
+# PROVIDER AWS
 provider "aws"{
     access_key= var.aws_access_key
     secret_key=var.aws_secret_key
@@ -9,7 +8,6 @@ provider "aws"{
 data "aws_availability_zones" "available"{}
 
 # DATA AMI
-
 data "aws_ami" "aws-linux" {
     most_recent = true
     owners = ["amazon"]
@@ -31,21 +29,18 @@ data "aws_ami" "aws-linux" {
 
 # RESOURCES
 # VPC
-
 resource "aws_vpc" "vpc" {
     cidr_block = var.network_address_space
     enable_dns_hostnames = "true"
 }
 
 # GATEWAY
-
 resource "aws_internet_gateway" "igw" {
     vpc_id =aws_vpc.vpc.id
 
 }
 
 # SUBNET
-
 resource "aws_subnet" "subnet1" {
     cidr_block = var.subnet1_address_space
     vpc_id =aws_vpc.vpc.id
@@ -55,7 +50,6 @@ resource "aws_subnet" "subnet1" {
 
 
 # ROUTE TABLE 
-
 resource "aws_route_table" "rtb" {
     vpc_id = aws_vpc.vpc.id
 
@@ -65,15 +59,12 @@ resource "aws_route_table" "rtb" {
     }
 }
 
-
-
 resource "aws_route_table_association" "rta-subnet1" {
     subnet_id = aws_subnet.subnet1.id
     route_table_id = aws_route_table.rtb.id
 }
 
 # SECURITY GROUP
-
 resource "aws_security_group" "nginx-sg" {
     name = "nginx-sg"
     vpc_id = aws_vpc.vpc.id
@@ -102,7 +93,6 @@ resource "aws_security_group" "nginx-sg" {
 }
 
 # INSTANCE
-
 resource "aws_instance" "nginx1" {
     ami = data.aws_ami.aws-linux.id
     instance_type = "t2.micro"
