@@ -1,1 +1,6 @@
+# .tfstate files
 *.tfstate
+*.tfstate.*
+
+*.tfplan
+*.tfstate.*
